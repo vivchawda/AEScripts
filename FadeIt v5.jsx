@@ -1,15 +1,17 @@
-﻿    // FadeIt v3 by Viv Chawda 
-    // v3: 11-2019
+﻿    // FadeIt v5 by Viv Chawda
+    // v5: 04-2020
+    // updated during Covid Pandemic
     // Twitter: @vivchawda
     //
     // Inspired from kd_AutoFade v1.3 by @takumi_kashima
     // This script automatically adds fadeIn and fadeOut expressions to selected layers.
-	// Select option "M" to add fadeIn & fadeOut at layer markers 1 & 2 instead (ctrl+8)
-    
+	  // Select option "M" to add fadeIn & fadeOut at layer markers 1 & 2 instead (ctrl+8).
+    // Select option "P" to preserve existing opacity value.
+
 function fadit_main(thisObj){
 
     function fadit_createPalette(thisObj) {
-        palette= (thisObj instanceof Panel) ? thisObj : new Window("palette", "FadeIt v3", undefined, {resizeable: true});
+        palette= (thisObj instanceof Panel) ? thisObj : new Window("palette", "FadeIt v5", undefined, {resizeable: true});
         palette.alignChildren = 'left';
         with(palette){
             palette.H = add('group');
@@ -23,8 +25,10 @@ function fadit_main(thisObj){
                 palette.H.easing = add('checkbox', undefined, 'E');
                 palette.H.easing.value = true;
                 palette.H.marker = add('checkbox', undefined, 'M');
+                palette.H.preserve = add('checkbox', undefined, 'P');
+                palette.H.preserve.value = true;
                 }
-        
+
             palette.F = add('group');
             palette.F.orientation = 'row';
             palette.F.alignChildren = 'fill';
@@ -34,7 +38,7 @@ function fadit_main(thisObj){
                 }
             palette.F.Btn.onClick = applyExpression;
             palette.F.Btn2.onClick = removeExpression;
-        
+
             };
         return palette;
     }
@@ -47,7 +51,7 @@ function fadit_main(thisObj){
     }
 
     function removeExpression() {
-        var curComp = app.project.activeItem; 
+        var curComp = app.project.activeItem;
 
         for (var layerId = 0; layerId < curComp.selectedLayers.length; layerId++){
             var layer = curComp.selectedLayers[layerId];
@@ -58,14 +62,14 @@ function fadit_main(thisObj){
     function applyExpression() {
         var ExpText = '';
         var curComp = app.project.activeItem;
-        
+
         for (var layerId = 0; layerId < curComp.selectedLayers.length; layerId++){
             var layer = curComp.selectedLayers[layerId];
                 ExpText = makeExpression(palette.H.ftime.text, palette.H.inout.selection.text,palette.H.marker.value)
                 layer('opacity').expression=ExpText;
-            
+
         }
-        
+
     }
 
         function makeExpression(ftime, ioc, mar){
@@ -74,7 +78,7 @@ function fadit_main(thisObj){
             func2 = 'easeOut';
             from = 0;
             to = 100;
-            
+
             if(mar){
                 if(ioc == 'In and Out'){
                     exp = 'fadeIn = easeIn(time, marker.key(1).time, marker.key(1).time + '+ftime+', 0, 100)\nfadeOut = easeOut(time, marker.key(2).time - '+ftime+', marker.key(2).time, 0, 100)\nfadeIn - fadeOut';
@@ -107,7 +111,7 @@ function fadit_main(thisObj){
                             '}else{\r' +
                             '	'+to+';\r'+
                             '}';
-                }  
+                }
             }
         return exp;
     }
@@ -115,6 +119,3 @@ function fadit_main(thisObj){
 }
 
 fadit_main(this);
-
-
-
