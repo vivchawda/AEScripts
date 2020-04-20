@@ -55,12 +55,23 @@
         }
     
         function removeExpression() {
+            var ExpText = palette.H.curOpacity.text;
             var curComp = app.project.activeItem;
+
+            if(palette.H.preserve.value){
+                alert("P is checked");
+                for (var layerId = 0; layerId < curComp.selectedLayers.length; layerId++){
+                    var layer = curComp.selectedLayers[layerId];
+                    layer('opacity').expression=ExpText;
+                }
+            }else{
+                for (var layerId = 0; layerId < curComp.selectedLayers.length; layerId++){
+                    var layer = curComp.selectedLayers[layerId];
+                    layer('opacity').expression='';
+                }
+
+
             
-            for (var layerId = 0; layerId < curComp.selectedLayers.length; layerId++){
-                var layer = curComp.selectedLayers[layerId];
-                layer('opacity').expression='';
-            }
         }
     
         function applyExpression() {
