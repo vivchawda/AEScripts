@@ -13,7 +13,7 @@ function fadit_main(thisObj){
     var curOpacity = app.project.activeItem.selectedLayers.opacity;
 
     function fadit_createPalette(thisObj) {
-        palette= (thisObj instanceof Panel) ? thisObj : new Window("palette", "FadeIt v5", undefined, {resizeable: true});
+        palette= (thisObj instanceof Panel) ? thisObj : new Window("palette", "Test", undefined, {resizeable: true});
         palette.alignChildren = 'left';
         with(palette){
             palette.H = add('group');
@@ -27,8 +27,8 @@ function fadit_main(thisObj){
                 palette.H.easing = add('checkbox', undefined, 'E');
                 palette.H.easing.value = true;
                 palette.H.marker = add('checkbox', undefined, 'M');
-                palette.H.preserve = add('checkbox', undefined, 'P');
-                palette.H.preserve.value = true;
+                palette.H.curOpacity = add('edittext', undefined, '100');
+                palette.H.curOpacity.preferredSize = [40,20];
                 }
 
             palette.F = add('group');
