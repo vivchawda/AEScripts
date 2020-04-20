@@ -10,6 +10,8 @@
 
 function fadit_main(thisObj){
 
+    var curOpacity = app.project.activeItem.selectedLayers.opacity;
+
     function fadit_createPalette(thisObj) {
         palette= (thisObj instanceof Panel) ? thisObj : new Window("palette", "FadeIt v5", undefined, {resizeable: true});
         palette.alignChildren = 'left';
@@ -33,11 +35,11 @@ function fadit_main(thisObj){
             palette.F.orientation = 'row';
             palette.F.alignChildren = 'fill';
             with(palette.F){
-                palette.F.Btn = add('button', undefined, 'Apply');
-                palette.F.Btn2 = add('button', undefined, 'Remove');
+                palette.F.apply = add('button', undefined, 'Apply');
+                palette.F.deapply = add('button', undefined, 'Remove');
                 }
-            palette.F.Btn.onClick = applyExpression;
-            palette.F.Btn2.onClick = removeExpression;
+            palette.F.apply.onClick = applyExpression;
+            palette.F.deapply.onClick = removeExpression;
 
             };
         return palette;
@@ -53,9 +55,19 @@ function fadit_main(thisObj){
     function removeExpression() {
         var curComp = app.project.activeItem;
 
-        for (var layerId = 0; layerId < curComp.selectedLayers.length; layerId++){
-            var layer = curComp.selectedLayers[layerId];
-            layer('opacity').expression='';
+        if(palette.H.preserve.value){
+            alert("P is checked");
+            for (var layerId = 0; layerId < curComp.selectedLayers.length; layerId++){
+                var layer = curComp.selectedLayers[layerId];
+                layer('opacity').expression='';
+                layer('opacity').setValue(curOpacity);
+                alert("P is set");
+            }
+        }else{
+            for (var layerId = 0; layerId < curComp.selectedLayers.length; layerId++){
+                var layer = curComp.selectedLayers[layerId];
+                layer('opacity').expression='';
+            }
         }
     }
 
