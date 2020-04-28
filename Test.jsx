@@ -9,8 +9,6 @@
     // Select option "P" to preserve existing opacity value.
 
     function fadit_main(thisObj){
-
-        //var curOpacity = app.project.activeItem.selectedLayers.opacity;
     
         function fadit_createPalette(thisObj) {
             palette= (thisObj instanceof Panel) ? thisObj : new Window("palette", "Test", undefined, {resizeable: true});
@@ -55,14 +53,16 @@
         }
     
         function removeExpression() {
-            var ExpText = palette.H.curOpacity.text;
             var curComp = app.project.activeItem;
+            var ExpText = palette.H.curOpacity.text;
 
             if(palette.H.preserve.value){
                 alert("P is checked");
                 for (var layerId = 0; layerId < curComp.selectedLayers.length; layerId++){
                     var layer = curComp.selectedLayers[layerId];
-                    layer('opacity').expression=ExpText;
+                    layer('opacity').expression='';
+                    layer('opacity').setValue(curOpacity);
+                    alert("P is set");
                 }
             }else{
                 for (var layerId = 0; layerId < curComp.selectedLayers.length; layerId++){
@@ -70,19 +70,17 @@
                     layer('opacity').expression='';
                 }
 
-
-            
         }
     
         function applyExpression() {
             var ExpText = palette.H.curOpacity.text;
             var curComp = app.project.activeItem;
     
-            for (var layerId = 0; layerId < curComp.selectedLayers.length; layerId++){
-                var layer = curComp.selectedLayers[layerId];
-                    layer('opacity').expression=ExpText;
-    
-            }
+                for (var layerId = 0; layerId < curComp.selectedLayers.length; layerId++){
+                    var layer = curComp.selectedLayers[layerId];
+                        layer('opacity').expression=ExpText;
+        
+                }
     
             }
     
