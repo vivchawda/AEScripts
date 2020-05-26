@@ -13,7 +13,7 @@ function fadit_main(thisObj){
     var curOpacity = app.project.activeItem.selectedLayers.opacity;
 
     function fadit_createPalette(thisObj) {
-        palette= (thisObj instanceof Panel) ? thisObj : new Window("palette", "Test", undefined, {resizeable: true});
+        palette= (thisObj instanceof Panel) ? thisObj : new Window("palette", "FadeIt v5", undefined, {resizeable: true});
         palette.alignChildren = 'left';
         with(palette){
             palette.H = add('group');
